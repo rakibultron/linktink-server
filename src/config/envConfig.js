@@ -13,6 +13,9 @@ const env = {
           rejectUnauthorized: false,
         },
       },
+      define: {
+        timestamps: false,
+      },
     },
   },
 };

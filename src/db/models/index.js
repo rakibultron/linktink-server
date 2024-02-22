@@ -15,4 +15,8 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
-module.exports = { sequelize };
+const { DataTypes } = require("sequelize");
+
+const User = require("./user")(sequelize, DataTypes);
+
+module.exports = { sequelize, User };

@@ -4,6 +4,7 @@ const helmet = require("helmet");
 var morgan = require("morgan");
 const cors = require("cors");
 const app = express();
+require("./config/envConfig");
 
 app.use(morgan("tiny"));
 
@@ -15,7 +16,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.FRONTEND_BASE_URL,
     credentials: true,
     methods: ["GET", "PATCH", "PUT", "POST", "DELETE", "OPTIONS"],
   })

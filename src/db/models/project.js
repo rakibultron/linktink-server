@@ -1,5 +1,7 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
+
+const { sequelize } = require("./index");
 module.exports = (sequelize, DataTypes) => {
   class project extends Model {
     /**
@@ -19,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      projct_name: DataTypes.STRING,
+      project_name: DataTypes.STRING,
       project_by: {
         type: DataTypes.UUID,
         allowNull: false,

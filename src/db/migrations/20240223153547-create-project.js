@@ -9,10 +9,9 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      projct_name: {
+      project_name: {
         type: Sequelize.STRING,
       },
-
       project_by: {
         type: Sequelize.UUID,
         allowNull: false,

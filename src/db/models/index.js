@@ -17,8 +17,12 @@ try {
 
 const User = require("./user")(sequelize, DataTypes);
 const Project = require("./project")(sequelize, DataTypes);
+const ShortLink = require("./shortlink")(sequelize, DataTypes);
 
 User.hasMany(Project, { foreignKey: "project_by" });
-Project.hasOne(User, { foreignKey: "project_by" });
+Project.belongsTo(User, { foreignKey: "project_by" });
 
-module.exports = { sequelize, User, Project };
+Project.hasMany(ShortLink, { foreignKey: "project_id" });
+ShortLink.belongsTo(Project, { foreignKey: "project_id" });
+
+module.exports = { sequelize, User, Project, ShortLink };

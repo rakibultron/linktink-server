@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 const env = require("../../config/envConfig");
 const { db } = env;
 
@@ -15,8 +15,10 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
-const { DataTypes } = require("sequelize");
-
 const User = require("./user")(sequelize, DataTypes);
+const Project = require("./project")(sequelize, DataTypes);
 
-module.exports = { sequelize, User };
+User.hasMany(Project, { foreignKey: "project_by" });
+Project.hasOne(User, { foreignKey: "project_by" });
+
+module.exports = { sequelize, User, Project };

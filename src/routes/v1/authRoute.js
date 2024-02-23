@@ -20,25 +20,17 @@ router.get(
     failureRedirect: `${process.env.FRONTEND_BASE_URL}/login`,
   }),
   (req, res) => {
-    // Successful authentication, redirect home.
+    const oneYearExpiryDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
 
-    // res.json()
-    // console.log('passport =>authenticate ',  req)
-    console.log("admin user =====> authenticate", req.user);
-    if (req.user.role === "admin") {
+    if (req.user) {
+      console.log({ useFromReq: req.user });
+      res.cookie("user", JSON.stringify(req.user), {
+        expires: oneYearExpiryDate,
+      });
       res.redirect(`${process.env.FRONTEND_BASE_URL}`);
     } else {
       res.redirect(`${process.env.FRONTEND_BASE_URL}`);
     }
-
-    // res.redirect(`${process.env.FRONTEND_BASE_URL}/admin/dashboard`)
-
-    // if (req.user.role === 'admin') {
-    //   res.redirect(`${process.env.FRONTEND_BASE_URL}/admin/dashboard`)
-    // } else {
-    //   console.log('user is not logged in')
-    // }
-    // res.redirect('exp://192.168.0.110:8081')
   }
 );
 

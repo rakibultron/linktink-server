@@ -5,7 +5,7 @@ module.exports = {
     await queryInterface.createTable("users", {
       id: {
         type: Sequelize.UUID,
-        defaultValue: Sequelize.fn("uuid_generate_v4"),
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
@@ -15,8 +15,14 @@ module.exports = {
       last_name: {
         type: Sequelize.STRING,
       },
+      full_name: {
+        type: Sequelize.STRING,
+      },
       email: {
         type: Sequelize.STRING,
+      },
+      oauth_id: {
+        type: Sequelize.DataTypes.STRING,
       },
       created_at: {
         type: "TIMESTAMP",

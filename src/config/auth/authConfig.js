@@ -13,25 +13,30 @@ passport.use(
       passReqToCallback: true,
     },
     async (request, accessToken, refreshToken, profile, done) => {
-      try {
-        // console.log({ profile });
-        const user = await User.findOne({
-          where: { email: profile._json.email },
-        });
-        if (!user) {
-          const newUser = await User.create({
-            first_name: profile.displayName,
-            last_name: "Doe",
-            email: profile._json.email,
-          });
+      console.log({ profile });
 
-          done(null, newUser);
-        } else {
+      try {
+        const { name, given_name, family_name, email } = profile._json;
+        console.log({ name, given_name, family_name, email });
+
+        const user = await User.findOne({
+          where: { oauth_id: profile.id },
+        });
+
+        if (user) {
           done(null, user);
+        } else {
+          const newUser = await User.create({
+            first_name: given_name,
+            last_name: family_name,
+            email: email,
+            oauth_id: profile.id,
+            full_name: name,
+          });
+          done(null, newUser);
         }
       } catch (error) {
         console.log({ error });
-        return done(error);
       }
     }
   )

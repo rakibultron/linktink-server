@@ -1,8 +1,9 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 
+const { sequelize } = require("./index");
 module.exports = (sequelize, DataTypes) => {
-  class user extends Model {
+  class project extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  user.init(
+  project.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -20,11 +21,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      first_name: DataTypes.STRING,
-      last_name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      full_name: DataTypes.STRING,
-      oauth_id: DataTypes.STRING,
+      project_name: DataTypes.STRING,
+      project_by: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       created_at: {
         type: "TIMESTAMP",
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
@@ -38,8 +45,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "user",
+      modelName: "project",
     }
   );
-  return user;
+  return project;
 };

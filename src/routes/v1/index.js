@@ -4,6 +4,7 @@ const authRoute = require("./authRoute");
 const userRoute = require("./userRoute");
 const projectRoute = require("./projectRoute");
 const shortLinkRoute = require("./shortLinkRoute");
+const clickRoute = require("./clickRoute");
 
 const defaultRoutes = [
   {
@@ -21,6 +22,10 @@ const defaultRoutes = [
   {
     path: "/shortlinks",
     route: shortLinkRoute,
+  },
+  {
+    path: "/clicks",
+    route: clickRoute,
   },
 ];
 

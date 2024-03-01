@@ -8,11 +8,22 @@ const redis = require("redis");
 var morgan = require("morgan");
 const cors = require("cors");
 
+var device = require("express-device");
+const requestIp = require("request-ip");
+const expressip = require("express-ip");
+
+const { Click, ShortLink } = require("./db/models/index");
+
 const app = express();
+var useragent = require("express-useragent");
+const { makeClick } = require("./controllers/clickController");
+
 require("./config/auth/authConfig");
 app.use(morgan("tiny"));
-
+app.use(useragent.express());
 app.use(express.json());
+// app.set("trust proxy", true);
+
 app.use(
   express.urlencoded({
     extended: true,
@@ -74,8 +85,14 @@ app.use(passport.session());
 app.use("/v1", routes);
 
 app.get("/", (req, res) => {
-  res.send("girlsglitter server its running");
+  res.send("linktink server its running");
 });
+
+app.use(expressip().getIpInfoMiddleware);
+app.use(device.capture());
+
+app.get("/:id", makeClick);
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

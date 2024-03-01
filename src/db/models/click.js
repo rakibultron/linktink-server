@@ -30,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      country: DataTypes.STRING,
+      city: DataTypes.STRING,
+      device: DataTypes.STRING,
+      browser: DataTypes.STRING,
+      os: DataTypes.STRING,
+      //   clicked_at: DataTypes.DATEONLY,
       created_at: {
         type: "TIMESTAMP",
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),

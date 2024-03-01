@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       },
       click_count: { type: DataTypes.INTEGER, defaultValue: 0 },
+      uuid: DataTypes.STRING,
       created_at: {
         type: "TIMESTAMP",
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
